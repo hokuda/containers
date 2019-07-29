@@ -1,0 +1,28 @@
+# configure ldap context
+/subsystem=elytron/dir-context=ldap-dir-context:add(url="ldaps://localhost:1636/",principal="cn=Manager,dc=redhat,dc=com",credential-reference={clear-text="password"}, referral-mode=follow)
+
+# configure ldap realm
+/subsystem=elytron/ldap-realm=ldap-realm:add(dir-context=ldap-dir-context,direct-verification="true",identity-mapping={search-base-dn="ou=people,dc=redhat,dc=com",rdn-identifier="uid", use-recursive-search="false", attribute-mapping=[{filter-base-dn="ou=group,dc=redhat,dc=com",filter="(& (objectClass=groupOfNames)(member={1}))",from="cn",to="Roles",role-recursion="5"}]})
+/subsystem=elytron/simple-role-decoder=from-roles-attribute:add(attribute=Roles)
+
+# configure ldap domain
+/subsystem=elytron/security-domain=ldap-security-domain:add(realms=[{realm=ldap-realm,role-decoder=from-roles-attribute}],default-realm=ldap-realm,permission-mapper=default-permission-mapper)
+
+# configure trust store
+/subsystem=elytron/key-store=ldaps-truststore:add(path=trust.jks,relative-to=jboss.server.config.dir,credential-reference={clear-text="password"},type=JKS)
+/subsystem=elytron/trust-manager=ldaps-trustmanager:add(key-store=ldaps-truststore,algorithm="PKIX")
+/subsystem=elytron/client-ssl-context=ldaps-context:add(trust-manager=ldaps-trustmanager,protocols=["TLSv1.2"])
+/subsystem=elytron/dir-context=ldap-dir-context:write-attribute(name=ssl-context,value=ldaps-context)
+
+# configure authentication factory
+/subsystem=elytron/http-authentication-factory=ldap-http-auth:add(http-server-mechanism-factory=global,security-domain=ldap-security-domain,mechanism-configurations=[{mechanism-name=BASIC,mechanism-realm-configurations=[{realm-name=ldap-realm}]}])
+/core-service=management/management-interface=http-interface:write-attribute(name=http-authentication-factory,value=ldap-http-auth)
+
+# configure application security domain referred from web.xml
+/subsystem=undertow/application-security-domain=application-ldap-security-domain:add(http-authentication-factory=ldap-http-auth)
+
+# configure logging subsystem
+/subsystem=logging/console-handler=CONSOLE:write-attribute(name=level, value=TRACE)
+/subsystem=logging/logger=org.wildfly.security:add(level=TRACE)
+
+reload

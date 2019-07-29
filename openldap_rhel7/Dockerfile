@@ -100,7 +100,7 @@ member: uid=user1,ou=people,dc=redhat,dc=com\n\
 \n\
 dn: cn=guest,ou=Group,dc=redhat,dc=com\n\
 objectClass: groupOfNames\n\
-cn: admin\n\
+cn: guest\n\
 member: uid=user2,ou=people,dc=redhat,dc=com\n\
 ' >> /entries.ldif
 
