@@ -1,6 +1,6 @@
-* openldap docker container
+# openldap docker container
 
-  -- usage
+## usage
 
 ```
     docker build -t openldap/rhel7 .
