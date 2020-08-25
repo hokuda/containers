@@ -19,13 +19,13 @@ podman login -u <username> https://registry.redhat.io
 * view log
 
 ```
-podman logs -f mariadb_rhsso730 to see the query log # to view query log
+podman logs -f mariadb_rhsso to see the query log # to view query log
 ```
 
 * run mariadb client
 
 ```
-mysql -u mariadb --password=password --host=localhost --protocol=TCP rhsso73x
+mysql -u mariadb --password=password --host=localhost --protocol=TCP rhsso
 ```
 
 * install mariadb jdbc driver

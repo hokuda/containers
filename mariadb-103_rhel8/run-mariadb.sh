@@ -1,6 +1,6 @@
 USER=mariadb
 PASSWORD=password
-DATABASE=rhsso73x
+DATABASE=rhsso
 CONTAINERNAME=mariadb_$DATABASE
 
 # reference: https://qiita.com/suin/items/95f15649a3ac39c8e9fb
