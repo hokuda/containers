@@ -39,3 +39,16 @@ dnf install mariadb-java-client
 ```
 ./configure-datasource.sh
 ```
+
+Notes:
+When you see:
+
+```
+Error: error creating build container: Error committing the finished image: error adding layer with blob "sha256:71391dc11a78542160544b68e45bc123ff55a2e84aeb6fa99b672d75765bc2f8": Error processing tar file(exit status 1): there might not be enough IDs available in the namespace (requested 1001:0 for /opt/app-root): lchown /opt/app-root: invalid argument
+```
+
+run:
+
+```
+podman system migrate
+```
