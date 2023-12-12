@@ -13,5 +13,5 @@ podman exec -it $CONTAINER_NAME dsconf -D "cn=Directory Manager" -w password lda
 podman cp new.p12 $CONTAINER_NAME:/
 podman exec -it $CONTAINER_NAME pk12util -i /new.p12 -d /etc/dirsrv/slapd-localhost/ -k /etc/dirsrv/slapd-localhost/pwdfile.txt -W password
 podman exec -it $CONTAINER_NAME dsconf -D "cn=Directory Manager" -w password ldap://localhost security certificate list
-podman exec -it $CONTAINER_NAME dsconf -D "cn=Directory Manager" -w password ldap://localhost security rsa set --tls-allow-rsa-certificates on --nss-token "internal (software)" --nss-cert-name "localhost - aaa"
+podman exec -it $CONTAINER_NAME dsconf -D "cn=Directory Manager" -w password ldap://localhost security rsa set --tls-allow-rsa-certificates on --nss-token "internal (software)" --nss-cert-name "localhost - Default Company Ltd"
 podman exec -it $CONTAINER_NAME dsctl slapd-localhost restart
