@@ -67,3 +67,26 @@ cp keycloak.conf $RHBK_HOME/conf/
 cd $RHBK_HOME
 ./bin/kc.sh start-dev
 ```
+
+* jdbc-ping
+
+```
+cp keycloak.conf $RHBK_HOME/conf/
+cd $RHBK_HOME
+./bin/kc.sh start-dev --cache=ispn --cache-config-file=cache-ispn.xml
+```
+
+```
+$ psql -h localhost -U keycloak -W keycloak
+Password: 
+psql (16.3, server 15.8)
+Type "help" for help.
+
+keycloak=> select * from jgroupsping ;
+               own_addr               | cluster_name |                                    ping_data                                     
+--------------------------------------+--------------+----------------------------------------------------------------------------------
+ fd795590-f574-4f91-82ac-62d6dcdff627 | ISPN         | \x0282ac62d6dcdff627fd795590f5744f910301000870312d33373235341004c0a801121e78ffff
+(1 row)
+
+keycloak=> 
+```
