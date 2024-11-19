@@ -1,5 +1,6 @@
 FROM registry.redhat.io/ubi8/ubi-init
 RUN yum install vim less net-tools selinux-policy-targeted -y
+RUN yum install polkit -y
 RUN yum module install redhat-ds:11 --enablerepo dirsrv-11-for-rhel-8-x86_64-rpms -y
 RUN dscreate create-template /root/dscreate.inf
 RUN sed -i 's/\;root_password = Directory_Manager_Password/root_password = password/' /root/dscreate.inf
