@@ -5,6 +5,9 @@ PASSWORD=password
 DATABASE=keycloak
 CONTAINERNAME=postgresql_$DATABASE
 IMAGE=localhost/rhel9/postgresql15
+#IMAGE=rhel9/postgresql15
+#IMAGE=registry.redhat.io/rhel9/postgresql-15:9.5-1737456893
+#IMAGE=registry.redhat.io/rhel9/postgresql-15
 
 echo $USER
 echo $PASSWORD
@@ -16,7 +19,7 @@ podman build -t $IMAGE .
 
 podman network create --subnet 10.1.0.0/24 podman-network1
 
-echo "podman run --replace -d --name $CONTAINERNAME -e POSTGRESQL_USER=$USER -e POSTGRESQL_PASSWORD=$PASSWORD -e POSTGRESQL_DATABASE=$DATABASE -p 5432:5432 $IMAGE"
+#echo "podman run --replace -d --name $CONTAINERNAME -e POSTGRESQL_USER=$USER -e POSTGRESQL_PASSWORD=$PASSWORD -e POSTGRESQL_DATABASE=$DATABASE -p 5432:5432 $IMAGE"
 
 podman run --network podman-network1 --ip 10.1.0.253 -d --name $CONTAINERNAME -e POSTGRESQL_USER=$USER -e POSTGRESQL_PASSWORD=$PASSWORD -e POSTGRESQL_DATABASE=$DATABASE -p 5432:5432 $IMAGE
 
